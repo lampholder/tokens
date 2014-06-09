@@ -49,10 +49,7 @@ app.directive('tokencell', function() {
             cell: '='
         },
         template: '<span ng-if="false == cell.hasOwnProperty(\'whcode\')">{{cell}}</span> ' +
-                  '<span ng-show="true == cell.hasOwnProperty(\'whcode\')"><input ' +
-                         'type="text" ' +
-                         'ng-model="cell.count" ' +
-                         'tokens-ui></input>' +
+                  '<span ng-show="true == cell.hasOwnProperty(\'whcode\')"><tokens-ui cell=cell></tokesn-ui>' +
                          '</span>'
     };
 });
@@ -60,7 +57,20 @@ app.directive('tokencell', function() {
 app.directive('tokensUi', function() {
     return {
         restrict: 'E',
+        scope: {
+            cell: '='
+        },
+        template: '<input type="text" ng-model="cell.count"></input><span>woo</span>',
         link: function(scope, element, attrs) {
+            scope.incr = function() {
+                cell.count = 15;
+            }
+            scope.decr = function() {
+                cell.count -= 1;
+            }
+            element.find('span').bind('click', function() {
+                scope.incr();
+            });
         }
     }
 });
