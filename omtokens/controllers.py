@@ -61,11 +61,18 @@ class Buckets(object):
         gc = gspread.login('lampholder@gmail.com', self.password)
         spreadsheet = gc.open_by_key('14Yb7BQ5PtczaX9z7b2YIig_xFZgI7Ox8kPA_PNRhXB4')
 
-        worksheet = [x for x in spreadsheet.worksheet('Individuals').get_all_values() if x[0] == 'thomasl']
+        ldap = 'thomasl'
+
+        worksheet = [x for x in spreadsheet.worksheet('Individuals').get_all_values() if x[0] == ldap]
         if len(worksheet) == 0:
             return None
         else:
             group_name = worksheet[0][1]
+            token_count = worksheet[0][2]
         
         spreadsheet_data = [ListMethods.strip(y) for y in ListMethods.split(spreadsheet.worksheet(group_name).get_all_values())]
-        return [[[TokensMethods.parse(z) for z in y] for y in x] for x in spreadsheet_data]
+        return {'bucketData': 
+                    {'user': ldap,
+                     'tokenCount': token_count,
+                     'buckets': [[[TokensMethods.parse(z) for z in y] for y in x] for x in spreadsheet_data]}
+                     }

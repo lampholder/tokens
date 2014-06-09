@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+    <div ng-app="simple">
+        <div ng-controller="OtherSimpleCtrl">
+            <span ng-repeat="bucketGroup in data.buckets">
+                <span ng-repeat="row in bucketGroup">
+                    <li ng-repeat="cell in row | filter:isBucket">{{cell.whcode}} {{cell.tags}} {{cell.count}}</li>
+                </span>
+            </span>
+        </div>
+        <div ng-controller="SimpleCtrl">
+            <table ng-repeat="bucketGroup in data.buckets">
+                <tr ng-repeat="row in bucketGroup">
+                    <td ng-repeat="cell in row"><tokencell cell="cell"></tokencell></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.js"></script>
+<script type="text/javascript" src="/static/simple.js"></script>
+
+</body>
+</html>
+
